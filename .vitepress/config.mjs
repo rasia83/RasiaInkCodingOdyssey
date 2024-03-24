@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/RasiaInkCodingOdyssey/',
   lang: 'en-US',
   title: "Java Journey by Rasia",
   description: "Coding the Path to Java Mastery",

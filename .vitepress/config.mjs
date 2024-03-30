@@ -44,9 +44,9 @@ export default defineConfig({
         text: 'Tools and Technologies',
         collapsed: true,
         items: [
-          { text: 'Hi', link: '/docs/test' }
+          { text: 'Docker for Developer', link: '/docs/tools/Docker_for_Developer' }
         ]
-      },
+      } /* ,
       {
         text: 'Examples',
         collapsed: true,
@@ -54,7 +54,7 @@ export default defineConfig({
           { text: 'Markdown Examples', link: '/docs/markdown-examples' },
           { text: 'Runtime API Examples', link: '/docs/api-examples' }
         ]
-      }
+      } */
     ],
 
     socialLinks: [

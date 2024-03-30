@@ -7,11 +7,11 @@ sidebar: true # left bar
 aside: false # right bar
 ---
 
-## About Tiago Edgar Rasia
+## About me
 
 My name is Tiago Edgar Rasia, and I am the individual behind the Java Journey project. With a blend of determination and passion for technology, I am embarking on a career transition into the realm of IT and programming.
 
-[LinkedIn Profile](linkedin.com/in/tiagorasia/)
+[LinkedIn Profile](https://www.linkedin.com/in/tiagorasia/)
 
 ## Professional Background
 

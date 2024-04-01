@@ -9,19 +9,21 @@ aside: false # right bar
 
 ## Docker for Developer
 
-::: info
+::: info :warning:
 This project is not a course or a guide, I just take personal notes for a quick reference.
 :::
 
-### Using database with docker
+## Using database with docker
 
-In this notes I’ll create a `docker-compose.yml` file or a specific name yml file to set up and run a MySQL or PostgreSQL.
+In this notes I’ll create a `docker-compose.yml` file or a specific name YAML file to set up and run a MySQL or PostgreSQL.
 
-In both examples will change default port, that’s good if I have DB installed or another container running.
+:warning: In both examples, we are changing the default ports to avoid conflicts if another instance of the same database or container is already running on the default ports. By specifying different ports, we ensure that our Docker containers can coexist peacefully without encountering port conflicts. This practice is especially useful in development environments where multiple services may be running simultaneously.
 
-#### PostgreSQL
+### PostgreSQL Setup with Docker
 
-```yml
+This section can include all the instructions and configurations related to setting up PostgreSQL using Docker.
+
+```YAML
 version: '3.8'
 
 services:
@@ -29,28 +31,28 @@ services:
     container_name: postgres_dockertest
     image: postgres
     ports:
-      - 5431:5432    # alterando a porta padrão 5432 para a porta 5431
+      - 5431:5432    # Changing the default port 5432 to port 5431.
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=dockertest
 ```
 
-Two ways to start this yml file
+Two ways to start this YAML file
 
-- `docker-compose up -d ` if the file has default name `docker-compose.yml`
+- `docker-compose up -d` if the file has default name `docker-compose.yml`
 
 - `docker-compose -f docker-compose-PostgreSQL.yml up -d` if the file has a specific name like  `docker-compose-PostgreSQL.yml`
 
 ```txt {1}
 PS C:\GitHub\dockertest> docker-compose -f docker-compose-PostgreSQL.yml up -d
 [+] Running 1/2
- - Network dockertest_default     Created                                                                                                                                                                                      0.9s 
- ✔ Container postgres_dockertest  Started                                                                                                                                                                                      0.8s 
+ - Network dockertest_default     Created   0.9s 
+ ✔ Container postgres_dockertest  Started   0.8s 
 PS C:\GitHub\dockertest> 
 ```
 
-![An image](../../assets/tools/postgre_dockertest.png)
+![PostgreSQL in Docker Desktop](../../assets/tools/postgre_dockertest.png)
 
 ```properties:line-numbers {3-5} [application.properties]
 server.port=8085
@@ -65,9 +67,11 @@ spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 ```
 
-#### MySQL
+### MySQL Setup with Docker
 
-```yml
+Similarly, this section can encompass all the details and steps required for setting up MySQL using Docker.
+
+```YAML
 version: '3.8'
 
 services:
@@ -75,7 +79,7 @@ services:
     container_name: mysql_dockertest
     image: mysql:8.0
     ports:
-      - 3305:3306   # alterando a porta padrão 3306 para a porta 3305
+      - 3305:3306   # Changing the default port 3306 to port 3305.
     environment:
       - MYSQL_ROOT_PASSWORD=admin
       - MYSQL_DATABASE=dockertest
@@ -86,22 +90,22 @@ volumes:
   mysql_data:
 ```
 
-Two ways to start this yml file
+Two ways to start this YAML file
 
-- `docker-compose up -d ` if the file has default name `docker-compose.yml`
+- `docker-compose up -d` if the file has default name `docker-compose.yml`
 
 - `docker-compose -f docker-compose-MySQL.yml up -d` if the file has a specific name like  `docker-compose-MySQL.yml`
 
 ```txt {1}
 PS C:\GitHub\dockertest> docker-compose -f docker-compose-MySQL.yml up -d
 [+] Running 1/1
- ✔ Container mysql_dockertest  Started                                                                                                                                                                                         0.4s 
+ ✔ Container mysql_dockertest  Started   0.4s 
 PS C:\GitHub\dockertest> 
 ```
 
-![An image](../../assets/tools/mysql_dockertest.png)
+![MySQL in Docker Desktop](../../assets/tools/mysql_dockertest.png)
 
-```properties:line-numbers {3-5} [application.properties]
+```properties:line-numbers {3-6} [application.properties]
 server.port=8085
 
 spring.datasource.url=jdbc:mysql://localhost:3305/dockertest
@@ -115,20 +119,23 @@ spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 ```
 
-##### For DBeaver users
+::: details :warning: For DBeaver users
 
-Right click on your connection, choose "Edit Connection"
-On the "Connection Settings" screen (main screen), click "Driver Properties"
-Right click on the "user properties" area and choose "Add new property"
-Add two properties:
+1. Right-click on your connection and select "Edit Connection".
+2. In the "Connection Settings" screen, navigate to "Driver Properties".
+3. Right-click on the "user properties" area and choose "Add new property".
+4. Add the following two properties:
 
-- "useSSL" = "false"
+   - **Property Name:** `useSSL`
+     **Value:** `false`
 
-- "allowPublicKeyRetrieval" = "true"
+   - **Property Name:** `allowPublicKeyRetrieval`
+     **Value:** `true`
 
-Source: https://cursos.alura.com.br/forum/topico-erro-public-key-retrieval-is-not-allowed-ao-fazer-test-connection-no-dbeaver-como-resolver-137427
+Source: [Alura Forum](https://cursos.alura.com.br/forum/topico-erro-public-key-retrieval-is-not-allowed-ao-fazer-test-connection-no-dbeaver-como-resolver-137427)
+:::
 
-### Test
+## Test
 
 ::: code-group
 
@@ -262,8 +269,8 @@ public class UserService {
 
 :::
 
-### Result
+## Result
 
-![An image](../../assets/tools/postgre_dockertest_DBeaver.png)
+![Result in PostgreSQL/DBeaver](../../assets/tools/postgre_dockertest_DBeaver.png)
 
-![An image](../../assets/tools/mysql_dockertest_DBeaver.png)
+![Result in MySQL/DBeaver](../../assets/tools/mysql_dockertest_DBeaver.png)

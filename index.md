@@ -5,7 +5,7 @@ layout: home
 hero:
   name: "Java Journey by Rasia"
   text: "Coding the Path to Java Mastery"
-  tagline: My great project tagline
+  tagline: Personal notes from my Java studies
   actions:
     - theme: brand
       text: Introduction

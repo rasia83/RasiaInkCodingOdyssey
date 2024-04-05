@@ -1,27 +1,28 @@
 ---
-title: Docker for Developer
-description: Using database with docker
+title: Docker para Desenvolvedor
+description: Usando banco de dados com Docker
 
 navbar: true # top bar
 sidebar: true # left bar
 aside: false # right bar
 ---
 
-## Docker for Developer
+## Docker para Desenvolvedor
 
 ::: info :warning:
-This project is not a course or a guide, I just take personal notes for a quick reference.
+Este projeto não é um curso ou um guia, apenas faço anotações pessoais para referência rápida.
 :::
 
-## Using database with docker
+## Usando banco de dados com Docker
 
-In this notes I’ll create a `docker-compose.yml` file or a specific name YAML file to set up and run a MySQL or PostgreSQL.
+Nestas anotações, vou criar um arquivo `docker-compose.yml` ou um arquivo YAML específico para configurar e executar um MySQL ou PostgreSQL.
 
-:warning: In both examples, we are changing the default ports to avoid conflicts if another instance of the same database or container is already running on the default ports. By specifying different ports, we ensure that our Docker containers can coexist peacefully without encountering port conflicts. This practice is especially useful in development environments where multiple services may be running simultaneously.
+:warning: Em ambos os exemplos, estamos alterando as portas padrão para evitar conflitos caso outra instância do mesmo banco de dados ou contêiner já esteja em execução nas portas padrão. Ao especificar portas diferentes, garantimos que nossos contêineres Docker possam coexistir pacificamente sem encontrar conflitos de porta. Essa prática é especialmente útil em ambientes de desenvolvimento onde vários serviços podem estar em execução simultaneamente.
 
-### PostgreSQL Setup with Docker
+### Configuração do PostgreSQL com Docker
 
 This section can include all the instructions and configurations related to setting up PostgreSQL using Docker.
+Esta seção incluei as instruções e configurações relacionadas à configuração do PostgreSQL usando Docker.
 
 ```YAML
 version: '3.8'
@@ -31,18 +32,18 @@ services:
     container_name: postgres_dockertest
     image: postgres
     ports:
-      - 5431:5432    # Changing the default port 5432 to port 5431.
+      - 5431:5432    # Alterando a porta padrão 5432 para a porta 5431.
     environment:
       - POSTGRES_USER=admin
       - POSTGRES_PASSWORD=admin
       - POSTGRES_DB=dockertest
 ```
 
-Two ways to start this YAML file
+Duas maneiras de iniciar este arquivo YAML
 
-- `docker-compose up -d` if the file has default name `docker-compose.yml`
+- `docker-compose up -d` se o arquivo tiver o nome padrão `docker-compose.yml`
 
-- `docker-compose -f docker-compose-PostgreSQL.yml up -d` if the file has a specific name like  `docker-compose-PostgreSQL.yml`
+- `docker-compose -f docker-compose-PostgreSQL.yml up -d` se o arquivo tiver um nome específico como `docker-compose-PostgreSQL.yml`
 
 ```txt {1}
 PS C:\GitHub\dockertest> docker-compose -f docker-compose-PostgreSQL.yml up -d
@@ -67,7 +68,7 @@ spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
 ```
 
-### MySQL Setup with Docker
+### Configuração do MySQL com Docker
 
 Similarly, this section can encompass all the details and steps required for setting up MySQL using Docker.
 
@@ -135,7 +136,7 @@ spring.jpa.properties.hibernate.format_sql=true
 Source: [Alura Forum](https://cursos.alura.com.br/forum/topico-erro-public-key-retrieval-is-not-allowed-ao-fazer-test-connection-no-dbeaver-como-resolver-137427)
 :::
 
-## Test
+## Teste
 
 ::: code-group
 
@@ -231,6 +232,39 @@ import br.com.rasiaink.dockertest.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface UserRepository extends JpaRepository<User, Integer> {
+}
+```
+
+```java [UserService.java]
+package br.com.rasiaink.dockertest.service;
+
+import br.com.rasiaink.dockertest.model.User;
+import org.springframework.stereotype.Service;
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class UserService {
+
+    //simulando um banco de dados com a tabela user
+    private List<User> database = new ArrayList<>();
+
+    public void gravar(User user){
+        database.add(user);
+    }
+    public void alterar(User user){
+        int index = database.indexOf(user);
+        database.set(index,user);
+    }
+    public User buscarPorUsername(String username){
+        int index = database.indexOf(new User(username));
+        User selectUser = database.get(index);
+        return selectUser;
+    }
+    public List<User> listar(){
+        return database;
+    }
+
 }
 ```
 

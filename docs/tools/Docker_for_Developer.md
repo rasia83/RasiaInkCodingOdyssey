@@ -242,7 +242,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 ![Result in MySQL/DBeaver](../../assets/tools/mysql_dockertest_DBeaver.png)
 
-## Extra
+## Extra 1
 
 ### Add a .sql file to start with MySQL and an exemple to create a user
 
@@ -290,4 +290,29 @@ spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.MySQL8Dialect
 spring.jpa.hibernate.ddl-auto=update
 spring.jpa.show-sql=true
 spring.jpa.properties.hibernate.format_sql=true
+```
+
+## Extra 2
+
+### Neo4J
+
+```YAML
+version: "3.8"
+
+services:
+  neo4j:
+    image: neo4j:community
+    ports:
+      - 7474:7474
+      - 7687:7687
+      # This binds two ports (7474 and 7687) for HTTP and Bolt access to the Neo4j API.
+      # which allows you to access neo4j through your browser at http://localhost:7474
+    restart: unless-stopped
+    environment:
+      - NEO4J_AUTH=neo4j/password  # login / password
+    volumes:
+      - ./db/data:/data
+      - ./db/conf:/conf
+      - ./db/logs:/logs
+      - ./db/plugins:/plugins
 ```

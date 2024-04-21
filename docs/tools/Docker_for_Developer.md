@@ -316,3 +316,22 @@ services:
       - ./db/logs:/logs
       - ./db/plugins:/plugins
 ```
+
+### gvenzl/oracle-xe
+
+[COMO RODAR O ORACLE NO DOCKER... CONEXÃO COM SQL DEVELOPER](https://www.youtube.com/watch?v=j-FXrFHg8QE)
+
+
+
+```YAML
+version: "3.7"
+
+services:
+  oracle-server-db:
+    container_name: oracle-server-db
+    image: gvenzl/oracle-xe
+    ports:
+      - 1521:1521
+    enviroment:
+      ORACLE_PASSWORD: "Senha@1234"
+```
